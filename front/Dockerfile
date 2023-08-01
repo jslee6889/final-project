@@ -6,5 +6,5 @@ COPY ./nginx.conf /etc/nginx/conf.d/
 CMD ["nginx", "-g", "daemon off;"]
 
 ENV TZ=Asia/Seoul
-EXPOSE 80
+EXPOSE 8080
 

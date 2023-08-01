@@ -23,15 +23,22 @@ COPY enroll.jsp ${JETTY_HOME}/webapps/ROOT/enroll.jsp
 COPY sign_up.jsp ${JETTY_HOME}/webapps/ROOT/sign_up.jsp
 
 
+# 기본 패키지 설치와 MySQL Connector-J 다운로드
 RUN apt-get update && \
-    apt install dpkg
-RUN apt-get update && \
-    apt install wget
-WORKDIR ${JETTY_HOME}
-RUN chmod -R 777 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
-RUN chmod -R 777 dpkg -i mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
+    apt-get install -y wget
 
-RUN chmod -R 777 cp /usr/share/java/mysql-connector-j_8.1.0.jar ${JETTY_HOME}/lib/ext/mysql-connector-j_8.1.0.jar
+# MySQL Connector-J 다운로드 및 설치
+WORKDIR ${JETTY_HOME}/lib/ext
+RUN wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
+RUN dpkg -i mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
+
+# Connector-J 파일 권한 변경
+RUN chmod 644 mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
+
+# Jetty 디렉토리로 돌아가서 권한 변경
+WORKDIR ${JETTY_HOME}
+RUN chmod -R 777 ${JETTY_HOME}/lib/ext/mysql-connector-j_8.1.0.jar
+
 
 
 # Expose the default Jetty port

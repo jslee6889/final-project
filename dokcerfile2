@@ -38,7 +38,7 @@ RUN dpkg -i mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
 RUN chmod 777 mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
 
 # Jetty 디렉토리로 돌아가서 권한 변경
-cd /usr/share/java
+RUN cd /usr/share/java
 RUN chmod -R mysql-connector-j_8.1.0.jar
 
 

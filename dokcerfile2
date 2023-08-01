@@ -34,12 +34,14 @@ WORKDIR ${JETTY_HOME}/lib/ext
 RUN wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
 RUN dpkg -i mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
 
-# Connector-J 파일 권한 변경
+# MySQL Connector-J 파일의 권한을 변경합니다.
 RUN chmod 777 mysql-connector-j_8.1.0-1ubuntu22.04_all.deb
 
-# Jetty 디렉토리로 돌아가서 권한 변경
-RUN cd /usr/share/java
-RUN chmod -R mysql-connector-j_8.1.0.jar
+# /usr/share/java 디렉토리로 이동합니다.
+WORKDIR /usr/share/java
+
+# MySQL Connector-J 파일의 권한을 변경합니다.
+RUN chmod -R 777 mysql-connector-j_8.1.0.jar
 
 
 
